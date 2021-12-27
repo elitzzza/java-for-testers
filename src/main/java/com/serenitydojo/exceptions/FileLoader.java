@@ -30,20 +30,14 @@ public class FileLoader {
         }catch(IOException textDoesntMatch){
             return false;
         }
-
-
     }
 
-    public Boolean fileHasText(String filename, String expectedText)throws MissingWelcomeFileException {
+    public boolean fileHasText(String filename, String expectedText) {
         String path = "src/main/resources/" + filename;
         try {
-           Boolean hasText =  (Files.readString(Paths.get(path)).contains(expectedText));
-            return true;
-        } catch (MissingWelcomeFileException e) {
-            return false;
-        }catch (IOException e){
-            return false;
+            return (Files.readString(Paths.get(path)).contains(expectedText));
+        } catch (IOException e) {
+            throw new MissingWelcomeFileException("Missing welcome file: " + filename, e);
         }
-
     }
 }
